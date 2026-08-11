@@ -1,0 +1,72 @@
+[
+  {
+    "name": "VELOCITY_SPIKE",
+    "description": "50+ transactions from one VPA in 10 minutes",
+    "key_features": ["txn_count_1min > 10", "txn_count_5min > 25"],
+    "default_action": "Block + Alert",
+    "typical_score_min": 0.80
+  },
+  {
+    "name": "LARGE_AMOUNT_ANOMALY",
+    "description": "Amount more than 5x the sender's historical average",
+    "key_features": ["amount_zscore > 5.0"],
+    "default_action": "High-Risk Hold",
+    "typical_score_min": 0.55
+  },
+  {
+    "name": "NEW_DEVICE_LARGE_TXN",
+    "description": "First-time device with transaction above 10,000",
+    "key_features": ["is_new_device = 1", "amount > 10000"],
+    "default_action": "High-Risk Hold",
+    "typical_score_min": 0.55
+  },
+  {
+    "name": "MULE_ACCOUNT_STAR",
+    "description": "Receiving from 20+ unique senders in 1 hour",
+    "key_features": ["unique_receivers_1hr > 20"],
+    "default_action": "Block + NPCI Report",
+    "typical_score_min": 0.80
+  },
+  {
+    "name": "RAPID_FORWARDING_CHAIN",
+    "description": "Funds passing through 4+ VPAs within 5 minutes",
+    "key_features": ["chain_length >= 4"],
+    "default_action": "Block all nodes",
+    "typical_score_min": 0.80
+  },
+  {
+    "name": "GEO_IMPOSSIBLE",
+    "description": "Transaction speed implies faster-than-possible travel",
+    "key_features": ["is_geo_impossible = True"],
+    "default_action": "Block + Alert",
+    "typical_score_min": 0.80
+  },
+  {
+    "name": "NIGHT_LARGE_TRANSFER",
+    "description": "Large amount transferred between 1AM and 4AM",
+    "key_features": ["is_deep_night = 1", "amount > 50000"],
+    "default_action": "High-Risk Hold",
+    "typical_score_min": 0.55
+  },
+  {
+    "name": "VPA_IMPERSONATION",
+    "description": "VPA name has edit-distance < 3 from a known brand",
+    "key_features": ["vpa_similarity_score > 0.85"],
+    "default_action": "Suspicious Alert",
+    "typical_score_min": 0.30
+  },
+  {
+    "name": "KNOWN_FRAUD_PROXIMITY",
+    "description": "Receiver is 1 hop from a confirmed fraud VPA",
+    "key_features": ["fraud_hop_count = 1"],
+    "default_action": "Block",
+    "typical_score_min": 0.80
+  },
+  {
+    "name": "DORMANT_ACCOUNT_SPIKE",
+    "description": "Account inactive 90+ days then suddenly active",
+    "key_features": ["days_since_last_txn > 90"],
+    "default_action": "Suspicious Alert",
+    "typical_score_min": 0.30
+  }
+]

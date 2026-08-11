@@ -1,0 +1,107 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "title": "False Positive Rate (FPR)",
+      "type": "gauge",
+      "gridPos": { "h": 8, "w": 6, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "false_positive_rate_pct",
+          "legendFormat": "FPR %"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "max": 10,
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.5 },
+              { "color": "red", "value": 1.0 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "title": "Fraud Catch Rate (Recall)",
+      "type": "gauge",
+      "gridPos": { "h": 8, "w": 6, "x": 6, "y": 0 },
+      "targets": [
+        {
+          "expr": "fraud_catch_rate_pct",
+          "legendFormat": "Recall %"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "max": 100,
+          "thresholds": {
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 70 },
+              { "color": "green", "value": 85 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "title": "Analyst Decisions (Cumulative)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "expr": "analyst_decisions_total{decision=\"confirm_fraud\"}",
+          "legendFormat": "Confirmed Fraud"
+        },
+        {
+          "expr": "analyst_decisions_total{decision=\"mark_legitimate\"}",
+          "legendFormat": "Marked Legitimate"
+        },
+        {
+          "expr": "analyst_decisions_total{decision=\"escalate\"}",
+          "legendFormat": "Escalated"
+        }
+      ]
+    },
+    {
+      "title": "Ensemble Score Distribution Over Time",
+      "type": "heatmap",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [
+        {
+          "expr": "rate(ensemble_score_bucket[5m])",
+          "legendFormat": "{{le}}"
+        }
+      ]
+    },
+    {
+      "title": "Fraud Alert Volume by Tier",
+      "type": "piechart",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "targets": [
+        {
+          "expr": "fraud_alerts_total",
+          "legendFormat": "{{risk_tier}}"
+        }
+      ]
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "tags": ["upi", "fraud", "model"],
+  "templating": { "list": [] },
+  "time": { "from": "now-1h", "to": "now" },
+  "title": "UPI Fraud - Model Performance",
+  "uid": "upi-model-performance"
+}

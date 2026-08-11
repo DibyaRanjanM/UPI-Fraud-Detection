@@ -1,0 +1,7 @@
+# Model files go here after training. Not committed to git.
+# isolation_forest.pkl
+# autoencoder.pt
+# autoencoder_meta.pkl
+# xgboost.pkl
+# shap_explainer.pkl
+# scaler.pkl
